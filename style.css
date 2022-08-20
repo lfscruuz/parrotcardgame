@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
     font-family: 'Roboto', sans-serif;
     background-color: #eef9bf;
@@ -32,6 +36,7 @@ h1{
 }
 
 .card{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,8 +46,40 @@ h1{
     background-color: #A7E9AF;
     border-radius: 5%;
     box-shadow:0px 0px 2px #99CEA8;
+    border: solid red;
 }
 
-.hidden{
-    display: none;
+.front{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 117px;
+    height: 146px;
+    margin: 17px;
+    background-color: #A7E9AF;
+    border-radius: 5%;
+    position: absolute;
+}
+
+.back{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 117px;
+    height: 146px;
+    margin: 17px;
+    border-radius: 5%;
+    background-color: #A7E9AF;
+    position: absolute;
+    opacity: 0;
+}
+
+.opacity{
+    opacity: 1;
+}
+
+.highlight{
+    border: solid;
 }
