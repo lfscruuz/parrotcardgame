@@ -1,8 +1,10 @@
-let quantity = Number(prompt('Quantas cartas (de 2 a 14)?'));
+let quantity = Number(prompt('Quantas cartas (de 4 a 14)?'));
 const cards = document.querySelector('.cards');
 let gameCards = [];
 let selectedCards = [];
 let wonCards = [];
+let wonGames = 0;
+let globalCounter = 0;
 
 const card1 = '<div class="card card1"><div class="front ${gameCards[counter]}" onclick="chooseCard(this);"><img src="./media/front 1.png" alt="front 1"></div><div class="back ${gameCards[counter]}" onclick="chooseCard(this);"><img src="./media/bobrossparrot.gif" alt="bobrossparrot"></div></div>'
 const card2 = '<div class="card card2"><div class="front ${gameCards[counter]}" onclick="chooseCard(this);"><img src="./media/front 1.png" alt="front 1"></div><div class="back ${gameCards[counter]}" onclick="chooseCard(this);"><img src="./media/explodyparrot.gif" alt="bobrossparrot"></div></div>'
@@ -38,16 +40,15 @@ function game(){
     gameCards.sort(randomize);
 }
 
-let counter = 0;
+
 
 function cardQuantity(){
+    let counter = 0;
     while (counter < quantity){
         cards.innerHTML = cards.innerHTML + gameCards[counter];
         counter++
     }
 }
-
-console.log(gameCards)
 
 game();
 cardQuantity();
@@ -62,21 +63,40 @@ function chooseCard(chosenCard){
     }else{
         selectedCards.push(chosenCard)
     }
-
-    console.log(selectedCards[0].parentNode.classList)
-
     if (selectedCards.length === 2){
-        if (selectedCards[0].parentNode.classList[1] === selectedCards[1].parentNode.classList[1]){
-            wonCards.push(selectedCards)
-            selectedCards = [];
-        } else if(selectedCards[0].parentNode.classList[1] !== selectedCards[1].parentNode.classList[1]){
-            // selectedCards[0].classList[1].toggle('opacity')
-            // selectedCards[1].classList[1].toggle('opacity')
-            selectedCards.map((card) =>{card.classList.toggle('opacity')})
-            selectedCards = [];
+        setTimeout(checkMatch, 1000)
+        function checkMatch(){
+            if (selectedCards[0].parentNode.classList[1] === selectedCards[1].parentNode.classList[1]){
+                wonCards.push(selectedCards.parentNode)
+                selectedCards = [];
+                globalCounter++
+                console.log(globalCounter)
+                console.log(quantity)
+                
+            } else if(selectedCards[0].parentNode.classList[1] !== selectedCards[1].parentNode.classList[1]){
+                // selectedCards[0].parentNode.classList.toggle('opacity')
+                // selectedCards[1].parentNode.classList.toggle('opacity')
+                selectedCards.map((card)=>{card.classList.toggle('opacity')});
+                selectedCards = [];
+            }
+            
         }
+    }else if(selectedCards.length > 2){
+        selectedCards.map((card)=>{card.classList.toggle('opacity')});
+        selectedCards = [];
     }
-    
-    console.log(wonCards)
-    console.log(selectedCards.length);
+
+}
+
+while (wonCards.length > 0 && globalCounter <= quantity / 2){
+    if (globalCounter === quantity / 2){
+        alert('terminou o jogo')
+        // let question = prompt('quer jogar de novo?')
+        // if (question === 'sim'){
+        //     quantity = Number(prompt('Quantas cartas (de 4 a 14)?'));
+        //     game()
+        // }else{
+        //     break
+        // }
+    }
 }
